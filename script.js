@@ -12,22 +12,23 @@ type IComment =
 }
 */
 
-// Count Nested Array Kolom Komentar
+// Count Nested Array
+const commentId = [1, [11, [111, 112], 12, [121]], 2];
 
-const comments = [1, [11, [111, 112], 12, [121]], 2];
-const countKeys = (comments) => {
-  let count = 0;
-
-  const helper = (comments) => {
-    for (let value of Object.values(comments)) {
-      if (typeof value === 'object') {
-        helper(value);
-      }
-     
-      if (!Array.isArray(value)) count++;
+Array.prototype.getLength = function () {
+    function getMultiLength(array) {
+        var sum = 0;
+        for (var count = 0; count < array.length; count++) {
+            if (Array.isArray(array[count])) {
+                sum += getMultiLength(array[count]);
+            } else {
+                sum++;
+            }
+        }
+        return sum;
     }
-  }
-  helper(comments)
-  return count;
-}
-console.log("Jumlah Komentar yaitu: " + countKeys(comments))
+
+    return getMultiLength(this.valueOf());
+};
+
+console.log("Jumlah Komentar yaitu: " + (commentId.getLength()));
